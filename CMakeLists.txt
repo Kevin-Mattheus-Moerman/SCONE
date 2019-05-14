@@ -17,6 +17,7 @@ find_package(Xo REQUIRED)
 option(SCONE_OPENSIM_3 "Support OpenSim 3.3" ON)
 option(SCONE_OPENSIM_4 "Support OpenSim 4.0 - EXPERIMENTAL" OFF)
 option(SCONE_LUA "Support for lua scripting" OFF)
+option(SCONE_HYFYDY "Support Hyfydy - EXPERIMENTAL" OFF)
 
 # CMake has the ability to find Qt; we don't need to provide additional files.
 find_package(Qt5Widgets)
@@ -48,6 +49,13 @@ endif()
 add_subdirectory(submodules/xo/xo)
 add_subdirectory(submodules/xo/test)
 add_subdirectory(submodules/spot)
+
+if (SCONE_HYFYDY)
+	find_path( HYFYDY_DIR src/hfd/hfd_api.h )
+	if (HYFYDY_DIR)
+		add_subdirectory("${HYFYDY_DIR}" "${CMAKE_BINARY_DIR}/hyfydy")
+	endif()
+endif()
 
 #
 # Add targets
